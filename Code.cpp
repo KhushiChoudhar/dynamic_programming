@@ -97,3 +97,30 @@ long long connectRopes(int* arr, int n)
     }
     return ans;
 }
+
+//EQUAL SUBSET SUM
+class Solution { 
+public:
+bool change(vector<int>&nums,int sum,int i,vector<vector<int>>&dp){
+    if(sum==0) return 1;
+    if(i==nums.size()) return 0;
+    if(sum<0) return 0;
+    if(dp[i][sum]!=-1) return dp[i][sum];
+    bool a=change(nums,sum-nums[i],i+1,dp);
+    bool b=change(nums,sum,i+1,dp);
+    return a|| b;
+}
+    bool canPartition(vector<int>& nums) {
+        int sum=0;
+        for(auto i: nums){
+            sum+=i;
+        }
+        if(sum%2!=0) return 0;   
+        int s=sum/2;
+        vector<vector<int>>dp(nums.size(),vector<int>(s+1,-1));
+        bool a=change(nums,s,0,dp);
+        return a;
+    }
+};
+
+// COUNT OF SUBSET AND A GIVEN SUM

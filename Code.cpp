@@ -124,3 +124,32 @@ bool change(vector<int>&nums,int sum,int i,vector<vector<int>>&dp){
 };
 
 // COUNT OF SUBSET AND A GIVEN SUM
+//MINIMUM SUBSET SUM DIFFERENCE
+#include <bits/stdc++.h> 
+bool change(vector<int>&arr,int sum,int i,vector<vector<int>>&dp){
+    if(sum==0) return 1;
+    if(i==arr.size()) return 0;
+    if(sum<0) return 0;
+    if(dp[i][sum]!=-1) return dp[i][sum];
+    int l=change(arr,sum-arr[i],i+1,dp);
+    int m=change(arr,sum,i+1,dp);
+    return dp[i][sum]=l|| m;
+}
+int minSubsetSumDifference(vector<int>& arr, int n)
+{
+    int sum=0;
+	for(auto i:arr){
+        sum+=i;
+    }
+    vector<vector<int>>dp(n,vector<int>(sum/2+1,-1));
+    int mini=INT_MAX;
+    for(int i=0;i<=sum/2;i++){
+        bool l=change(arr,i,0,dp);
+        if(l){
+            mini=min(mini,abs((sum-i)-i));
+        }
+    }
+    return mini;
+}
+
+
